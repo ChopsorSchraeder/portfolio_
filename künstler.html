@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Künstler Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    #logo {
+      transition: all 0.3s ease-in-out;
+    }
+    .navbar-scrolled #logo {
+      transform: scale(0.7);
+    }
+    .navbar-scrolled {
+      background-color: white;
+    }
+    .popup {
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body class="bg-white">
+  <!-- Navbar -->
+  <header class="fixed w-full z-10 flex  justify-between p-4 bg-transparent">
+    <div id="logo" class="flex items-center space-x-2">
+      <img src="a.png" alt="Logo" class="h-20 w-20">
+      <span class="text-2xl font-bold">Artist Name</span>
+    </div>
+    <button id="menu-button" class="p-2 focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+    <nav id="navbar" class="hidden flex-col items-center space-y-2 absolute top-16 right-4 bg-white shadow-lg p-8 rounded">
+      <a href="#gallery" class="block py-2 px-4 text-lg">Gallery</a>
+      <a href="#contact" id="contact-button" class="block py-2 px-4 text-lg">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Banner -->
+  <section id="banner" class="relative h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('banner.jpg');">
+    <div class="absolute top-0 left-0 h-full w-full bg-black opacity-50"></div>
+    <div class="relative z-10 text-center">
+      <img src="a.png" alt="Foreground Image" class="inline-block w-1/3">
+      <blockquote class="mt-4 text-2xl text-white">"Artist's inspirational quote here."</blockquote>
+      <button id="contact-button-banner" class="mt-4 inline-block px-6 py-3 bg-blue-500 text-white text-lg rounded">Contact</button>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-8">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Image Item -->
+      <div class="relative group gallery-item">
+        <img src="a.png" alt="Artwork 1" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Artwork Title 1</p>
+          <p class="text-md text-gray-700 price">€1000</p>
+        </div>
+      </div>
+      <!-- More Placeholder Images -->
+      <div class="relative group gallery-item">
+        <img src="a.png" alt="Placeholder 1" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Placeholder Title 1</p>
+          <p class="text-md text-gray-700 price">€500</p>
+        </div>
+      </div>
+      <div class="relative group gallery-item">
+        <img src="a.png" alt="Placeholder 2" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Placeholder Title 2</p>
+          <p class="text-md text-gray-700 price">€600</p>
+        </div>
+      </div>
+      <div class="relative group gallery-item">
+        <img src="a.png" alt="Placeholder 3" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Placeholder Title 3</p>
+          <p class="text-md text-gray-700 price">€700</p>
+        </div>
+      </div>
+      <div class="relative group gallery-item">
+        <img src="a.png" alt="Placeholder 4" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Placeholder Title 4</p>
+          <p class="text-md text-gray-700 price">€800</p>
+        </div>
+      </div>
+      <div class="relative group gallery-item">
+        <img src="logoR.png" alt="Placeholder 5" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Placeholder Title 5</p>
+          <p class="text-md text-gray-700 price">€900</p>
+        </div>
+      </div>
+       <div class="relative group gallery-item">
+        <img src="logoR.png" alt="Placeholder 5" class="w-full h-auto shadow-lg">
+        <div class="absolute bottom-0 left-0 w-full p-4 bg-white bg-opacity-75">
+          <p class="text-lg font-semibold title">Placeholder Title 5</p>
+          <p class="text-md text-gray-700 price">€900</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4 bg-gray-800 text-white text-center">
+    <a href="#impressum" class="underline">Impressum</a>
+  </footer>
+
+  <!-- Popup Modal for Images (hidden by default) -->
+  <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden popup ">
+    <div class="bg-white inset-9 p-8 rounded-lg relative ">
+      <img id="popup-image" src="" alt="Popup Image" class="w-full h-auto ">
+      <p id="popup-title" class="mt-4 text-2xl font-semibold"></p>
+      <p id="popup-price" class="text-lg text-gray-700"></p>
+      <a href="#contact" class="mt-4 inline-block px-6 py-3 bg-blue-500 text-white text-lg rounded">Contact</a>
+      <button id="popup-close" class="absolute top-1.5 right-1.5 text-gray-700 ">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Popup Modal for Contact Form (hidden by default) -->
+  <div id="contact-popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden popup">
+    <div class="bg-white p-8 rounded-lg relative">
+      <h2 class="text-2xl font-semibold mb-4">Contact Form</h2>
+      <form id="contact-form">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input type="text" id="name" name="name" class="mt-1 p-2 w-full border rounded">
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <input type="email" id="email" name="email" class="mt-1 p-2 w-full border rounded">
+        </div>
+        <div class="mb-4">
+          <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+          <textarea id="message" name="message" class="mt-1 p-2 w-full border rounded"></textarea>
+        </div>
+        <button type="submit" class="px-6 py-3 bg-blue-500 text-white text-lg rounded">Send</button>
+      </form>
+      <button id="contact-popup-close" class="absolute top-4 right-4 text-black">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const navbar = document.querySelector('header');
+      const logo = document.getElementById('logo');
+      const menuButton = document.getElementById('menu-button');
+      const navbarMenu = document.getElementById('navbar');
+      const popup = document.getElementById('popup');
+      const popupImage = document.getElementById('popup-image');
+      const popupTitle = document.getElementById('popup-title');
+      const popupPrice = document.getElementById('popup-price');
+      const popupClose = document.getElementById('popup-close');
+      const contactPopup = document.getElementById('contact-popup');
+      const contactButton = document.getElementById('contact-button');
+      const contactButtonBanner = document.getElementById('contact-button-banner');
+      const contactPopupClose = document.getElementById('contact-popup-close');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          navbar.classList.add('navbar-scrolled');
+          navbarMenu.classList.add('hidden');
+        } else {
+          navbar.classList.remove('navbar-scrolled');
+        }
+      });
+
+      menuButton.addEventListener('click', () => {
+        navbarMenu.classList.toggle('hidden');
+      });
+
+      window.addEventListener('click', (e) => {
+        if (!navbar.contains(e.target) && !navbarMenu.classList.contains('hidden')) {
+          navbarMenu.classList.add('hidden');
+        }
+      });
+
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const imageSrc = item.querySelector('img').src;
+          const title = item.querySelector('.title').innerText;
+          const price = item.querySelector('.price').innerText;
+          popupImage.src = imageSrc;
+          popupTitle.innerText = title;
+          popupPrice.innerText = price;
+          popup.classList.remove('hidden');
+        });
+      });
+
+      popupClose.addEventListener('click', () => {
+        popup.classList.add('hidden');
+      });
+
+      contactButton.addEventListener('click', () => {
+        contactPopup.classList.remove('hidden');
+      });
+
+      contactButtonBanner.addEventListener('click', () => {
+        contactPopup.classList.remove('hidden');
+      });
+
+      contactPopupClose.addEventListener('click', () => {
+        contactPopup.classList.add('hidden');
+      });
+
+      window.addEventListener('click', (e) => {
+        if (!contactPopup.contains(e.target) && !contactButton.contains(e.target) && !contactButtonBanner.contains(e.target)) {
+          contactPopup.classList.add('hidden');
+        }
+      });
+
+     
+    });
+  </script>
+</body>
+</html>

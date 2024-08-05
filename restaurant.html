@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body,
+        h1,
+        h5 {
+            font-family: "Raleway", sans-serif;
+        }
+
+        body,
+        html {
+            height: 100%;
+        }
+
+        .bgimg {
+            background-image: url('RestaurantInnen.png');
+            min-height: 100%;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body class="h-full">
+
+    <div class="bgimg flex flex-col justify-between text-white h-full">
+        <div class="flex justify-center items-center h-full text-6xl">
+            <img src="logoR3.png" alt="Logo Placeholder" class="w-80 h-70">
+        </div>
+        <div class="absolute top-0 left-0 p-7 text-2xl space-y-4 flex flex-col">
+            <button onclick="document.getElementById('menu').classList.remove('hidden')" class="bg-black text-green-800 text-4xl py-6 px-10">Menü</button>
+            <button onclick="document.getElementById('contact').classList.remove('hidden')" class="bg-black text-green-800 text-4xl py-6 px-10">Kontakt</button>
+        </div>
+        <div class="p-4">
+            <p class="text-2xl">Montag - Freitag 10 - 22 Uhr | Samstag 14 - 23 Uhr</p>
+            <p class="text-xl">Eine Straße, Stuttgart</p>
+        </div>
+    </div>
+
+    <!-- Menu Modal -->
+    <div id="menu" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-8 animate-zoom w-3/4 max-w-md">
+            <div class="bg-black text-white p-4 relative">
+                <span onclick="document.getElementById('menu').classList.add('hidden')" class="absolute top-4 right-4 cursor-pointer text-2xl">x</span>
+                <h1 class="text-2xl">Vorspeisen</h1>
+            </div>
+            <div class="p-4 space-y-2">
+                <h5>Salat 1 <b>2.50€</b></h5>
+                <h5>Salat 2 <b>3.50€</b></h5>
+            </div>
+            <div class="bg-black text-white p-4">
+                <h1 class="text-2xl">Hauptgang</h1>
+            </div>
+            <div class="p-4 space-y-2">
+                <h5>Burger 1 <b>8.50€</b></h5>
+                <h5>Burger 2 <b>5.50€</b></h5>
+                <h5>Pommes 1 <b>4.00€</b></h5>
+                <h5>Pommes 2 <b>6.50€</b></h5>
+            </div>
+            <div class="bg-black text-white p-4">
+                <h1 class="text-2xl">Nachtisch</h1>
+            </div>
+            <div class="p-4 space-y-2">
+                <h5>Eis 1 <b>2.50€</b></h5>
+                <h5>Eis 2 <b>2.00€</b></h5>
+                <h5>Torte <b>4.00€</b></h5>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contact" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-8 animate-zoom w-3/4 max-w-md">
+            <div class="bg-black text-white p-4 relative">
+                <span onclick="document.getElementById('contact').classList.add('hidden')" class="absolute top-4 right-4 cursor-pointer text-2xl">x</span>
+                <h1 class="text-2xl">Kontakt</h1>
+            </div>
+            <div class="p-4">
+                <p>Reservieren sie einen Tisch oder stellen sie uns Fragen:</p>
+                <form action="/action_page.php" target="_blank" class="space-y-4">
+                    <p><input class="w-full p-4 border" type="text" placeholder="Name" required name="Name"></p>
+                    <p><input class="w-full p-4 border" type="number" placeholder="Wie viele Leute" required name="People"></p>
+                    <p><input class="w-full p-4 border" type="datetime-local" placeholder="Datum und Zeit" required name="date" value="2020-11-16T20:00"></p>
+                    <p><input class="w-full p-4 border" type="text" placeholder="Nachricht" required name="Message"></p>
+                    <p><button class="bg-black text-white py-2 px-4" type="submit">Nachricht senden</button></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white  ">
+        <div class="container mx-auto text-center">
+            <a href="datenschutzerklarung.html" class="text-white hover:underline">Datenschutzerklärung</a> |
+            <a href="impressum.html" class="text-white hover:underline">Impressum</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

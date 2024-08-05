@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malermeister Handwerksbetrieb</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .logo-large {
+            width: 150px;
+            transition: width 0.3s ease;
+        }
+        .logo-small {
+            width: 100px;
+            transition: width 0.3s ease;
+        }
+        #contact-form-container,
+        #impressum-container,
+        #datenschutz-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        #contact-form,
+        #impressum,
+        #datenschutz {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .carousel-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-image {
+            position: absolute;
+            width: 100%;
+            max-width: 600px;
+            height: 100%;
+            max-height: 400px;
+            transition: transform 0.5s ease-in-out, z-index 0s;
+        }
+        .carousel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-dots {
+            text-align: center;
+            margin-top: 10px;
+            position: absolute;
+            bottom: -30px;
+            width: 100%;
+        }
+        .carousel-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .carousel-dot.active {
+            background-color: #333;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .carousel-arrow-left {
+            left: 10px;
+        }
+        .carousel-arrow-right {
+            right: 10px;
+        }
+        section {
+            scroll-margin-top: 100px;
+        }
+        footer {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        #impressum, #datenschutz {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+        }
+        .dropdown-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            z-index: 20;
+        }
+        .dropdown-menu.show {
+            display: flex;
+        }
+        .dropdown-menu a {
+            padding: 10px;
+            text-align: center;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px;
+            transition: all 0.3s;
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .navbar-menu {
+                display: none;
+            }
+            .dropdown-menu {
+                display: none;
+            }
+        }
+        #cookie-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-100">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow fixed w-full z-10 top-0">
+        <div class="container mx-auto px-6 py-3 flex items-center justify-between relative">
+            <div class="flex items-center">
+                <img src="Udo_Logo2.png" alt="Logo" id="logo" class="logo-large">
+                <div class="text-xl font-bold text-gray-700 ml-3">Maler- und Lackiermeister Udo Schräder</div>
+            </div>
+            <div class="flex items-center">
+                <div class="navbar-menu hidden md:flex">
+                    <a href="#home" class="text-gray-700 hover:text-gray-900 px-3">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-gray-900 px-3">Leistungen</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-gray-900 px-3">Galerie</a>
+                    <a href="#about" class="text-gray-700 hover:text-gray-900 px-3">Über Uns</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900 px-3" onclick="toggleContactForm()">Kontakt</a>
+                </div>
+                <div class="hamburger md:hidden" onclick="toggleDropdownMenu()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="dropdown-menu">
+                    <a href="#home" class="text-gray-700 hover:text-gray-900 px-3">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-gray-900 px-3">Leistungen</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-gray-900 px-3">Galerie</a>
+                    <a href="#about" class="text-gray-700 hover:text-gray-900 px-3">Über Uns</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900 px-3" onclick="toggleContactForm()">Kontakt</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-cover bg-center h-screen" style="background-image: url('https://source.unsplash.com/random/1920x1080?painting');">
+        <div class="flex items-center justify-center h-full bg-blue-900  ">
+            <div class="text-center text-white">
+                <h1 class="text-5xl font-bold">Willkommen bei Maler- und Lackierermeister Udo Schräder</h1>
+                <p class="mt-4 text-lg">Ihr Experte für hochwertige Malerarbeiten</p>
+                <a href="#contact" class="mt-6 inline-block bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600" onclick="toggleContactForm()">Kontaktieren Sie uns</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800">Unsere Dienstleistungen</h2>
+            <div class="mt-8 flex flex-wrap">
+                <div class="w-full md:w-1/3 px-4 py-2">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-gray-700">Innenanstriche</h3>
+                        <p class="mt-4 text-gray-600">Professionelle Innenanstriche für ein frisches Zuhause.</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 px-4 py-2">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-gray-700">Außenanstriche</h3>
+                        <p class="mt-4 text-gray-600">Langlebige Außenanstriche für einen perfekten ersten Eindruck.</p>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 px-4 py-2">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-xl font-semibold text-gray-700">Dekorative Maltechniken</h3>
+                        <p class="mt-4 text-gray-600">Kreative Gestaltungsmöglichkeiten für besondere Akzente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-12 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-850 pb-10">Galerie</h2>
+            <div class="carousel relative">
+                <div class="carousel-images">
+                    <div class="carousel-image">
+                        <img src="a.png" alt="Project 1">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="b.png" alt="Project 2">
+                    </div>
+                    <div class="carousel-image">
+                        <img src="c.png" alt="Project 3">
+                    </div>
+                    <!-- Weitere Bilder hier hinzufügen -->
+                </div>
+                <button class="carousel-arrow carousel-arrow-left" onclick="prevSlide()">&#10094;</button>
+                <button class="carousel-arrow carousel-arrow-right" onclick="nextSlide()">&#10095;</button>
+                <div class="carousel-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-12 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800">Über Uns</h2>
+            <p class="mt-4 text-gray-600 text-center">Maler- und Lackierermeister Udo Schräder ist ein Handwerksbetrieb mit über 40 Jahren Erfahrung in der Branche. Unser Ziel ist es, unseren Kunden hochwertige und zuverlässige Malerarbeiten zu bieten.</p>
+        </div>
+    </section>
+
+    
+
+    <!-- Contact Form Popup -->
+    <div id="contact-form-container" class="flex" onclick="closePopup(event, 'contact-form-container')">
+        <div id="contact-form" onclick="event.stopPropagation()">
+            <div class="flex justify-end">
+                <button onclick="toggleContactForm()" class="text-gray-600 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-3xl font-bold text-center text-gray-800">Kontaktieren Sie mich unter:</h2>
+                <p class="mt-4 text-2x1 text-gray-600 p-4">
+                    E-Mail: info@malermeister-schraeder.de<br>
+                   <br>
+                    Telefon: 01234/567890<br>
+                    <br>
+                    Handy: 09876/543210<br>
+                  
+                </p>
+            </div>
+            
+           
+        </div>
+    </div>
+
+    <!-- Impressum Popup -->
+    <div id="impressum-container" class="flex" onclick="closePopup(event, 'impressum-container')">
+        <div id="impressum" onclick="event.stopPropagation()">
+            <div class="flex justify-end">
+                <button onclick="toggleImpressum()" class="text-gray-600 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Impressum</h2>
+                <p class="mt-4 text-gray-600">
+                    <strong>Malermeister Udo Schräder</strong><br>
+                    Musterstraße 1<br>
+                    12345 Musterstadt<br>
+                    Deutschland<br>
+                    <br>
+                    Telefon: 01234/567890<br>
+                    E-Mail: info@malermeister-schraeder.de<br>
+                    <br>
+                    <strong>Vertretungsberechtigter:</strong><br>
+                    Udo Schräder<br>
+                    <br>
+                    <strong>Umsatzsteuer-Identifikationsnummer:</strong><br>
+                    DE123456789<br>
+                    <br>
+                    <strong>Handelsregister:</strong><br>
+                    Registergericht: Musterstadt<br>
+                    Registernummer: HRB 123456<br>
+                    <br>
+                    <strong>Berufsbezeichnung:</strong><br>
+                    Malermeister (verliehen in Deutschland)<br>
+                    <br>
+                    <strong>Zuständige Kammer:</strong><br>
+                    Handwerkskammer Musterstadt<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datenschutzerklärung Popup -->
+    <div id="datenschutz-container" class="flex" onclick="closePopup(event, 'datenschutz-container')">
+        <div id="datenschutz" onclick="event.stopPropagation()">
+            <div class="flex justify-end">
+                <button onclick="toggleDatenschutz()" class="text-gray-600 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Datenschutzerklärung</h2>
+                <p class="mt-4 text-gray-600">
+                    <strong>Verantwortlicher:</strong><br>
+                    Malermeister Udo Schräder<br>
+                    Musterstraße 1<br>
+                    12345 Musterstadt<br>
+                    Deutschland<br>
+                    <br>
+                    <strong>Datenschutzbeauftragter:</strong><br>
+                    (Falls vorhanden, hier Kontaktdaten angeben)<br>
+                    <br>
+                    <strong>Erhobene Daten:</strong><br>
+                    Wir erheben folgende personenbezogene Daten: Name, E-Mail-Adresse, IP-Adresse.<br>
+                    <br>
+                    <strong>Zweck der Datenverarbeitung:</strong><br>
+                    Die Daten werden zur Kontaktaufnahme, zur Bearbeitung von Anfragen und für den Newsletter-Versand verwendet.<br>
+                    <br>
+                    <strong>Rechtsgrundlage der Verarbeitung:</strong><br>
+                    Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).<br>
+                    <br>
+                    <strong>Weitergabe an Dritte:</strong><br>
+                    Eine Weitergabe der Daten an Dritte erfolgt nicht, außer es besteht eine gesetzliche Verpflichtung dazu.<br>
+                    <br>
+                    <strong>Speicherdauer:</strong><br>
+                    Die Daten werden so lange gespeichert, wie es für die Erfüllung der Zwecke erforderlich ist oder gesetzliche Aufbewahrungsfristen bestehen.<br>
+                    <br>
+                    <strong>Betroffenenrechte:</strong><br>
+                    Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten. Kontaktieren Sie uns hierzu unter den oben genannten Kontaktdaten.<br>
+                    <br>
+                    <strong>Informationen zu Cookies:</strong><br>
+                    Unsere Webseite verwendet Cookies, um die Nutzung zu erleichtern und die Seite zu verbessern. Sie können der Verwendung von Cookies widersprechen.<br>
+                    <br>
+                    <strong>Widerspruchsrecht:</strong><br>
+                    Sie haben das Recht, der Datenverarbeitung zu widersprechen. Kontaktieren Sie uns hierzu unter den oben genannten Kontaktdaten.<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner">
+        <span>Diese Webseite verwendet Cookies, um die Nutzererfahrung zu verbessern. Durch die Nutzung unserer Webseite stimmen Sie der Verwendung von Cookies zu.</span>
+        <button onclick="acceptCookies()" class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 ml-4">Akzeptieren</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-10">
+        <button onclick="toggleImpressum()" class="text-gray-700 hover:text-gray-900">Impressum</button>
+        <button onclick="toggleDatenschutz()" class="text-gray-700 hover:text-gray-900 ml-4">Datenschutzerklärung</button>
+        <span class="absolute right-5">Design by Ihr Name</span>
+    </footer>
+
+    
+
+    <script>
+        function toggleContactForm() {
+            const contactFormContainer = document.getElementById('contact-form-container');
+            if (contactFormContainer.style.display === 'none' || contactFormContainer.style.display === '') {
+                contactFormContainer.style.display = 'flex';
+                loadFormData();
+            } else {
+                contactFormContainer.style.display = 'none';
+            }
+        }
+
+        function toggleImpressum() {
+            const impressumContainer = document.getElementById('impressum-container');
+            if (impressumContainer.style.display === 'none' || impressumContainer.style.display === '') {
+                impressumContainer.style.display = 'flex';
+            } else {
+                impressumContainer.style.display = 'none';
+            }
+        }
+
+        function toggleDatenschutz() {
+            const datenschutzContainer = document.getElementById('datenschutz-container');
+            if (datenschutzContainer.style.display === 'none' || datenschutzContainer.style.display === '') {
+                datenschutzContainer.style.display = 'flex';
+            } else {
+                datenschutzContainer.style.display = 'none';
+            }
+        }
+
+        function toggleDropdownMenu() {
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            dropdownMenu.classList.toggle('show');
+        }
+
+        function saveFormData() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            localStorage.setItem('contactName', name);
+            localStorage.setItem('contactEmail', email);
+            localStorage.setItem('contactMessage', message);
+        }
+
+        function loadFormData() {
+            const name = localStorage.getItem('contactName');
+            const email = localStorage.getItem('contactEmail');
+            const message = localStorage.getItem('contactMessage');
+            if (name) document.getElementById('name').value = name;
+            if (email) document.getElementById('email').value = email;
+            if (message) document.getElementById('message').value = message;
+        }
+
+        function closePopup(event, containerId) {
+            if (event.target.id === containerId) {
+                document.getElementById(containerId).style.display = 'none';
+            }
+        }
+
+        window.addEventListener('scroll', function() {
+            const logo = document.getElementById('logo');
+            if (window.scrollY > 50) {
+                logo.classList.remove('logo-large');
+                logo.classList.add('logo-small');
+            } else {
+                logo.classList.remove('logo-small');
+                logo.classList.add('logo-large');
+            }
+        });
+
+        window.addEventListener('load', function() {
+            localStorage.removeItem('contactName');
+            localStorage.removeItem('contactEmail');
+            localStorage.removeItem('contactMessage');
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookie-banner').style.display = 'block';
+            }
+        });
+
+        function acceptCookies() {
+            document.getElementById('cookie-banner').style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-image');
+        const dotsContainer = document.querySelector('.carousel-dots');
+
+        function createDots() {
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if (index === 0) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => goToSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+
+        function updateSlides() {
+            const offset = -currentSlide * 100;
+            document.querySelector('.carousel-images').style.transform = `translateX(${offset}%)`;
+            updateDots();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlides();
+        }
+
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlides();
+        }
+
+        setInterval(nextSlide, 5000);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            createDots();
+            updateSlides();
+        });
+
+        // Smooth scroll to section
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                const offset = 100;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = targetElement.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

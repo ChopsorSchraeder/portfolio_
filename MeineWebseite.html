@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Developer Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+
+    .service-container {
+      cursor: pointer;
+    }
+
+    .info-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      background-color: #4a5568;
+      color: #f7fafc;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+    }
+
+    .info-box div {
+      flex: 1;
+    }
+
+    .info-box .keyword {
+      border-right: 1px solid #e2e8f0;
+      padding-right: 1rem;
+      text-align: left;
+    }
+
+    .info-box .description {
+      padding-left: 1rem;
+      text-align: right;
+    }
+
+    .info-box.expanded {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+    }
+
+    .info-box.expanded .keyword,
+    .info-box.expanded .description {
+      border-right: none;
+      padding: 1rem;
+      text-align: left;
+    }
+
+ #contact-form-container,
+        #impressum-container,
+        #datenschutz-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+        }
+        #contact-form,
+        #impressum,
+        #datenschutz {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+         #impressum, #datenschutz {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+        }
+        #cookie-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            z-index: 100;
+        }
+
+
+    .service-box {
+      flex: 1;
+      padding: 1rem;
+      margin: 0.5rem;
+      min-width: 250px;
+      max-width: 300px;
+      transition: all 0.3s ease;
+    }
+
+    .service-box.expanded {
+      height: auto;
+    }
+
+    .service-box-content {
+      display: none;
+    }
+
+    .service-box.expanded .service-box-content {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+
+ <header class="bg-gray-800 text-white">
+    <nav class="container mx-auto flex justify-between items-center ">
+      <img src="LogoVollF1.png" alt="Logo" id="logo" class="w-1/4">
+      <ul class="hidden md:flex space-x-6">
+        <li><a href="#Leistungen" class="hover:text-gray-400">Leistungen</a></li>
+        <li><a href="#Schritte" class="hover:text-gray-400">Schritte</a></li>
+        <li><a href="#portfolio" class="hover:text-gray-400">Portfolio</a></li>
+        <li><a href="#about" class="hover:text-gray-400">About Me</a></li>
+        <li><a href="#contact" class="hover:text-gray-400">Kontakt</a></li>
+      </ul>
+      <div class="md:hidden">
+        <button id="menu-toggle" class="focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden">
+      <ul class="flex flex-col bg-gray-600 space-y-3 p-4 text-white">
+        <li><a href="#Leistungen" class="hover:text-gray-400">Leistungen</a></li>
+        <li><a href="#Schritte" class="hover:text-gray-400">Schritte</a></li>
+        <li><a href="#portfolio" class="hover:text-gray-400">Portfolio</a></li>
+        <li><a href="#about" class="hover:text-gray-400">About Me</a></li>
+        <li><a href="#contact" class="hover:text-gray-400">Kontakt</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Banner Section -->
+  <section id="home" class="bg-gray-900 text-white h-screen flex items-center justify-center bg-cover bg-center"
+    style="background-image: url('MeinLogoBanner.png');">
+    <div class="container mx-auto flex flex-col md:flex-row items-center">
+      <div class="w-full md:w-1/4 p-4 hidden md:block">
+        <img src="meinGesicht.jpg" alt="Banner Image" class="w-full h-auto object-cover rounded-lg">
+      </div>
+    </div>
+  </section>
+
+  <!-- Leistungen Section -->
+  <section class="bg-gray-700 text-white ">
+    <div id="Leistungen" class="container mx-auto py-20">
+      <h2 class="text-4xl font-bold text-center mb-24">Leistungen</h2>
+      <div class="flex flex-wrap justify-center">
+        <div class="service-container">
+          <div class="service-box bg-gray-800 shadow-md rounded-lg hover:bg-gray-600 transition-colors duration-300"
+            data-color="#3c151a" onclick="toggleService(this)">
+            <p class="text-xl font-semibold">Design</p>
+            <div class="service-box-content mt-4 bg-gray-800 p-6 shadow-md rounded-lg">
+                <ul class="list-disc list-inside text-left space-y-2">
+                <li>Hilfe ihr idivduelles Desgin zu finden</li>
+                <li>Beratung und Weiterentwicklung ihrer Ideen</li>
+                <li>Mehrere Konzepte für eine zu ihrem Business passende Webseite</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="service-container">
+          <div class="service-box bg-gray-800 shadow-md rounded-lg hover:bg-gray-600 transition-colors duration-300"
+            data-color="#3c151a" onclick="toggleService(this)">
+            <p class="text-xl font-semibold">Entwicklung</p>
+            <div class="service-box-content mt-4 bg-gray-800 p-6 shadow-md rounded-lg">
+              <li>modernen Technologien wie React,Node.js und TailwindCSS</li>
+              <li>Integration von APIs</li>
+            </div>
+          </div>
+        </div>
+        <div class="service-container">
+          <div class="service-box bg-gray-800 shadow-md rounded-lg hover:bg-gray-600 transition-colors duration-300"
+            data-color="#3c151a" onclick="toggleService(this)">
+            <p class="text-xl font-semibold">SEO</p>
+            <div class="service-box-content mt-4 bg-gray-800 p-6 shadow-md rounded-lg">
+              <li>Optimierung der Webseite für Suchmaschinen, um die Sichtbarkeit zu verbessern</li>
+              <li>Analyse und Implementierung von On-Page- und Off-Page-SEO-Techniken</li>
+            </div>
+          </div>
+        </div>
+        <div class="service-container">
+          <div class="service-box bg-gray-800 shadow-md rounded-lg hover:bg-gray-600 transition-colors duration-300"
+            data-color="#3c151a" onclick="toggleService(this)">
+            <p class="text-xl font-semibold">Wartung und Support</p>
+            <div class="service-box-content mt-4 bg-gray-800 p-6 shadow-md rounded-lg">
+               <li>Regelmäßige Aktualisierung und Wartung der Webseite</li>
+              <li>Bereitstellung von technischem Support und Fehlerbehebung</li>
+            </div>
+          </div>
+        </div>
+        <div class="service-container">
+          <div class="service-box bg-gray-800 shadow-md rounded-lg hover:bg-gray-600 transition-colors duration-300"
+            data-color="#3c151a" onclick="toggleService(this)">
+            <p class="text-xl font-semibold">Logo Design</p>
+            <div class="service-box-content mt-4 bg-gray-800 p-6 shadow-md rounded-lg">
+              <h2 class="text-2xl font-bold mb-4">Logo Design</h2>
+              <li>Bestehende Logos moderniesieren</li>
+              <li>Auf Wunsch erstellen wir ein neues Logo</li>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Horizontally Aligned Boxes Section -->
+   <section class="py-28">
+    <div class="container mx-auto text-center mb-12">
+      <h2 class="text-4xl font-bold">Vorteile einer eigenen Webseite:</h2>
+    </div>
+    <div class="container mx-auto">
+      <div class="info-box" onclick="toggleBox(this)">
+        <div class="keyword">Online-Präsenz und Sichtbarkeit</div>
+        <div class="description">Eine Webseite macht ein Unternehmen rund um die Uhr weltweit erreichbar und erhöht die Sichtbarkeit.</div>
+      </div>
+      <div class="info-box" onclick="toggleBox(this)">
+        <div class="keyword">Glaubwürdigkeit und Vertrauen</div>
+        <div class="description">Eine professionelle Webseite vermittelt Seriosität und Vertrauen bei potenziellen Kunden.</div>
+      </div>
+      <div class="info-box" onclick="toggleBox(this)">
+        <div class="keyword">Marketing und Werbung</div>
+        <div class="description">Die Webseite dient als Plattform für verschiedene Marketingstrategien, wie SEO, Content-Marketing und Online-Werbung.</div>
+      </div>
+      <div class="info-box" onclick="toggleBox(this)">
+        <div class="keyword">Kundenbindung und Kommunikation</div>
+        <div class="description">Über die Webseite können Unternehmen mit Kunden in Kontakt bleiben, Feedback einholen und Kundenservice bieten.</div>
+      </div>
+      <div class="info-box" onclick="toggleBox(this)">
+        <div class="keyword">Wettbewerbsvorteil</div>
+        <div class="description">Eine gut gestaltete Webseite kann sich von der Konkurrenz abheben und einen Wettbewerbsvorteil bieten.</div>
+      </div>
+      <div class="info-box" onclick="toggleBox(this)">
+        <div class="keyword">Kostenersparnis</div>
+        <div class="description">Langfristig können Kosten für traditionelle Werbung und Kommunikation reduziert werden.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider Line -->
+  <div class="container mx-auto py-8">
+    <hr class="border-gray-400 w-4/5 mx-auto">
+  </div>
+
+
+  <!-- Section 1 -->
+
+<div  id="Schritte" class="container  mx-auto text-center mb-12 p-6">
+      <h2 class="text-4xl font-bold">Die 4 Schritte zur eigene Webseite</h2>
+    </div>
+
+<section class="container  mx-auto py-3 flex items-center">
+  <div class="w-1/2">
+    <img src="1.png" alt="Image 1" class=" h-auto mx-auto">
+  </div>
+  <div class="w-1/2 text-center">
+    <h2 class="text-4xl font-bold">Erstes Gespräch um ihre Idee und Fragen zu besprechen</h2> <br>
+    <p class="text-xl">Gegenseitiges Kennenlernen von ihre Unternehmen, Wunsch und der Richtung. <br> Idealerweise haben sie sich schon Gedanken gemacht oder Beispiele, was sie gut finden.  </p>
+
+  </div>
+</section>
+
+<!-- Section 2 -->
+<section class="container mx-auto py-3 flex items-center">
+  <div class="w-1/2 text-center">
+    <h2 class="text-4xl font-bold">Entwicklungen von Prototypen und Festlegung einer Richtung des Schemas</h2> <br>
+    <p class="text-xl">Zeitnahes erstellen ein erstes, grobes Konzept. Dann ist Ihr ehrliches, kritisches Feedback gefordert. So können wir sicher sein, dass wir Ihre Anforderungen richtig verstanden haben.</p>
+  </div>
+  <div class="w-1/2">
+    <img src="2.png" alt="Image 2" class=" h-auto mx-auto">
+  </div>
+</section>
+
+<!-- Section 3 -->
+<section class="container mx-auto py-3 flex items-center">
+  <div class="w-1/2">
+    <img src="3.png" alt="Image 1" class=" h-auto mx-auto">
+  </div>
+  <div class="w-1/2 text-center">
+    <h2 class="text-4xl font-bold">Strategieentwicklung und Programmieren </h2> <br>
+    <p class="text-xl">Nun geben Sie den Ball an uns ab. Wir setzen und nun daran, dass ihr Wunsch zur Realtität wird. Wenn es Bilder oder Videos gibt, die sie verwendet haben möchten, werden diese hier fällig.  </p>
+  </div>
+</section>
+
+<!-- Section 4 -->
+<section class="container mx-auto py-3 flex items-center">
+  <div class="w-1/2 text-center">
+   <h2 class="text-4xl font-bold">Letztes Zusammensetzen </h2> <br>
+    <p class="text-xl">Wir gehen alle Schritte mit ihnen durch und klären letzte Fragen  </p>
+  </div>
+  <div class="w-1/2">
+    <img src="4.png" alt="Image 2" class=" h-auto mx-auto">
+  </div>
+</section>
+
+<!-- Section Stern -->
+<section class="container mx-auto py-3 flex items-center">
+  <div class="w-1/2">
+    <img src="Stern.png" alt="Image 1" class=" h-auto mx-auto">
+  </div>
+  <div class="w-1/2 text-center">
+    <h2 class="text-4xl font-bold">Support und Wartung </h2> <br>
+    <p class="text-xl">Auch nach der Übergabe der Webseite und/oder des Logos stehen wir ihnen bei Fragen oder Änderungswünschen zur Seite. Für das reibungslose Funktionieren ihrer Webseite sorgen wir ab hier.  </p>
+  </div>
+</section>
+
+
+ <!-- Divider Line -->
+  <div class="container mx-auto py-8">
+    <hr class="border-gray-400 w-4/5 mx-auto">
+  </div>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="container mx-auto py-20">
+    <h2 class="text-4xl font-bold text-center mb-12">Portfolio</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Add your portfolio items here -->
+      <div class="bg-gray-800 text-white p-6 shadow-md">
+        <img src="a.png" alt="Project Image" class="w-full h-48 object-cover">
+        <h3 class="text-2xl font-semibold mt-4">Project Title</h3>
+        <p class="mt-2">Short description of the project.</p>
+      </div>
+      <div class="bg-gray-800 text-white p-6 shadow-md">
+        <img src="a.png" alt="Project Image" class="w-full h-48 object-cover">
+        <h3 class="text-2xl font-semibold mt-4">Project Title</h3>
+        <p class="mt-2">Short description of the project.</p>
+      </div>
+      <div class="bg-gray-800 text-white p-6 shadow-md">
+        <img src="a.png" alt="Project Image" class="w-full h-48 object-cover">
+        <h3 class="text-2xl font-semibold mt-4">Project Title</h3>
+        <p class="mt-2">Short description of the project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section id="about" class="bg-gray-800 text-white py-20">
+    <div class="container mx-auto">
+      <h2 class="text-4xl font-bold text-center mb-12">About Me</h2>
+      <div class="max-w-3xl mx-auto text-center">
+        <p>Hallo, ich bin Christopher Schräder, ein leidenschaftlicher Webentwickler, der sich der Unterstützung kleiner Unternehmen und Selbstständiger beim Aufbau einer starken Online-Präsenz widmet, auch für kleines Geld. <br>
+         Ich bin darauf spezialisiert, einzigartige, responsive Websites zu entwerfen und auf Wunsch auch überzeugende Logos zu erstellen, die ihre Marke ein Wiedererkennungsmerkmal geben. <br>
+         Lassen Sie uns gemeinsam daran arbeiten, Ihre Vision zum Leben zu erwecken und Ihr Unternehmen hervorzuheben in der digitalen Welt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <<section id="contact" class="bg-gray-100 py-20">
+  <div class="container mx-auto">
+    <h2 class="text-4xl font-bold text-center mb-12">Kontakt</h2>
+    <div class="max-w-lg mx-auto bg-gray-200 p-8 shadow-md rounded-lg">
+      <h3 class="text-2xl font-semibold mb-4">Anfragen und die erste Beratung ist kostenlos</h3>
+      <p class="mb-4"><strong>Name:</strong> Christopher Schräder</p>
+      <p class="mb-4"><strong>WhatsApp:</strong> +49 123 4567890</p>
+      <p class="mb-4"><strong>Phone:</strong> +49 098 7654321</p>
+      <p class="mb-4"><strong>Email:</strong> <a href="mailto:schraeder.christopher@gmail.com" class="text-blue-500">schraeder.christopher@gmail.com</a></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Impressum Popup -->
+    <div id="impressum-container" class="flex" onclick="closePopup(event, 'impressum-container')">
+        <div id="impressum" onclick="event.stopPropagation()">
+            <div class="flex justify-end">
+                <button onclick="toggleImpressum()" class="text-gray-600 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Impressum</h2>
+                <p class="mt-4 text-gray-600">
+                    <strong>Malermeister Udo Schräder</strong><br>
+                    Musterstraße 1<br>
+                    12345 Musterstadt<br>
+                    Deutschland<br>
+                    <br>
+                    Telefon: 01234/567890<br>
+                    E-Mail: info@malermeister-schraeder.de<br>
+                    <br>
+                    <strong>Vertretungsberechtigter:</strong><br>
+                    Udo Schräder<br>
+                    <br>
+                    <strong>Umsatzsteuer-Identifikationsnummer:</strong><br>
+                    DE123456789<br>
+                    <br>
+                    <strong>Handelsregister:</strong><br>
+                    Registergericht: Musterstadt<br>
+                    Registernummer: HRB 123456<br>
+                    <br>
+                    <strong>Berufsbezeichnung:</strong><br>
+                    Malermeister (verliehen in Deutschland)<br>
+                    <br>
+                    <strong>Zuständige Kammer:</strong><br>
+                    Handwerkskammer Musterstadt<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datenschutzerklärung Popup -->
+    <div id="datenschutz-container" class="flex" onclick="closePopup(event, 'datenschutz-container')">
+        <div id="datenschutz" onclick="event.stopPropagation()">
+            <div class="flex justify-end">
+                <button onclick="toggleDatenschutz()" class="text-gray-600 hover:text-gray-800">&times;</button>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-2xl font-bold text-center text-gray-800">Datenschutzerklärung</h2>
+                <p class="mt-4 text-gray-600">
+                    <strong>Verantwortlicher:</strong><br>
+                    Malermeister Udo Schräder<br>
+                    Musterstraße 1<br>
+                    12345 Musterstadt<br>
+                    Deutschland<br>
+                    <br>
+                    <strong>Datenschutzbeauftragter:</strong><br>
+                    (Falls vorhanden, hier Kontaktdaten angeben)<br>
+                    <br>
+                    <strong>Erhobene Daten:</strong><br>
+                    Wir erheben folgende personenbezogene Daten: Name, E-Mail-Adresse, IP-Adresse.<br>
+                    <br>
+                    <strong>Zweck der Datenverarbeitung:</strong><br>
+                    Die Daten werden zur Kontaktaufnahme, zur Bearbeitung von Anfragen und für den Newsletter-Versand verwendet.<br>
+                    <br>
+                    <strong>Rechtsgrundlage der Verarbeitung:</strong><br>
+                    Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) oder unseres berechtigten Interesses (Art. 6 Abs. 1 lit. f DSGVO).<br>
+                    <br>
+                    <strong>Weitergabe an Dritte:</strong><br>
+                    Eine Weitergabe der Daten an Dritte erfolgt nicht, außer es besteht eine gesetzliche Verpflichtung dazu.<br>
+                    <br>
+                    <strong>Speicherdauer:</strong><br>
+                    Die Daten werden so lange gespeichert, wie es für die Erfüllung der Zwecke erforderlich ist oder gesetzliche Aufbewahrungsfristen bestehen.<br>
+                    <br>
+                    <strong>Betroffenenrechte:</strong><br>
+                    Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer Daten. Kontaktieren Sie uns hierzu unter den oben genannten Kontaktdaten.<br>
+                    <br>
+                    <strong>Informationen zu Cookies:</strong><br>
+                    Unsere Webseite verwendet Cookies, um die Nutzung zu erleichtern und die Seite zu verbessern. Sie können der Verwendung von Cookies widersprechen.<br>
+                    <br>
+                    <strong>Widerspruchsrecht:</strong><br>
+                    Sie haben das Recht, der Datenverarbeitung zu widersprechen. Kontaktieren Sie uns hierzu unter den oben genannten Kontaktdaten.<br>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner">
+        <span>Diese Webseite verwendet Cookies, um die Nutzererfahrung zu verbessern. Durch die Nutzung unserer Webseite stimmen Sie der Verwendung von Cookies zu.</span>
+        <button onclick="acceptCookies()" class="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 ml-4">Akzeptieren</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-10 bg-gray-500">
+        <button onclick="toggleImpressum()" class="text-gray-700 hover:text-gray-900 ml-4">Impressum</button>
+        <button onclick="toggleDatenschutz()" class="text-gray-700 hover:text-gray-900 ml-4">Datenschutzerklärung</button>
+       
+    </footer>
+
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+
+ // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    document.addEventListener('click', function(event) {
+      const isClickInsideMenu = mobileMenu.contains(event.target);
+      const isClickInsideToggle = menuToggle.contains(event.target);
+
+      if (!isClickInsideMenu && !isClickInsideToggle) {
+        mobileMenu.classList.add('hidden');
+      }
+    });
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileMenu.classList.toggle('hidden');
+    });
+
+// Toggle service boxes
+    function toggleService(element) {
+      const content = element.querySelector('.service-box-content');
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+      } else {
+        document.querySelectorAll('.service-box-content').forEach(box => box.style.display = 'none');
+        content.style.display = 'block';
+      }
+    }
+
+    // Toggle info boxes
+    function toggleBox(box) {
+      document.querySelectorAll('.info-box').forEach(b => {
+        if (b !== box) {
+          b.classList.remove('expanded');
+        }
+      });
+      box.classList.toggle('expanded');
+    }
+
+
+ function toggleImpressum() {
+            const impressumContainer = document.getElementById('impressum-container');
+            if (impressumContainer.style.display === 'none' || impressumContainer.style.display === '') {
+                impressumContainer.style.display = 'flex';
+            } else {
+                impressumContainer.style.display = 'none';
+            }
+        }
+
+        function toggleDatenschutz() {
+            const datenschutzContainer = document.getElementById('datenschutz-container');
+            if (datenschutzContainer.style.display === 'none' || datenschutzContainer.style.display === '') {
+                datenschutzContainer.style.display = 'flex';
+            } else {
+                datenschutzContainer.style.display = 'none';
+            }
+        }
+
+function acceptCookies() {
+            document.getElementById('cookie-banner').style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        }
+
+function closePopup(event, containerId) {
+            if (event.target.id === containerId) {
+                document.getElementById(containerId).style.display = 'none';
+            }
+        }
+
+  </script>
+
+</body>
+
+</html>
